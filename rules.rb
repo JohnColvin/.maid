@@ -38,4 +38,17 @@ Maid.rules do
     end
   end
 
+  rule 'Organize Downloads' do
+    types = { 'public.image' => 'Images', 'com.adobe.pdf' => 'PDFs', 'public.archive' => 'Archives', 'public.audio' => 'Audio' }
+    dir('~/Downloads/*').each do |path|
+      content_types(path).each do |content_type|
+        if types.keys.include?(content_type)
+          organized_dir = "~/Downloads/#{ types[content_type] }"
+          mkdir(organized_dir)
+          move(path, organized_dir)
+        end
+      end
+    end 
+    
+  end
 end
