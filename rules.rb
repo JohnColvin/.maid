@@ -29,7 +29,7 @@ Maid.rules do
       end
     end
   end
-  
+
   rule 'Old files downloaded while developing' do
     dir('~/Downloads/*').each do |path|
       if downloaded_from(path).any? { |u| u.match('http://localhost') } && 1.day.since?(accessed_at(path))
@@ -40,15 +40,11 @@ Maid.rules do
 
   rule 'Organize Downloads' do
     types = { 'public.image' => 'Images', 'com.adobe.pdf' => 'PDFs', 'public.archive' => 'Archives', 'public.audio' => 'Audio' }
-    dir('~/Downloads/*').each do |path|
-      content_types(path).each do |content_type|
-        if types.keys.include?(content_type)
-          organized_dir = "~/Downloads/#{ types[content_type] }"
-          mkdir(organized_dir)
-          move(path, organized_dir)
-        end
-      end
-    end 
-    
+    types.each do |type, sub_dir|
+      organized_dir = "~/Downloads/#{ sub_dir }"
+      mkdir(organized_dir)
+      move(filter_by_content_type(dir('~/Downloads/*'), type), organized_dir)
+    end
   end
+
 end
