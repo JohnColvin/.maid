@@ -21,9 +21,11 @@ Maid.rules do
   end
 
   rule 'Screenshots' do
+    screen_shot_dir = '~/Documents/Screenshots/'
+    system("mkdir -p #{screen_shot_dir}")
     dir('~/Desktop/Screen Shot *').each do |path|
       if 1.day.since?(accessed_at(path))
-        move(path, '~/Documents/Screenshots/')
+        move(path, screen_shot_dir)
       end
     end
   end
