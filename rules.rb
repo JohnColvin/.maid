@@ -9,9 +9,9 @@ Maid.rules do
   end
 
   rule 'Mac OS X applications in zip files' do
-    found = dir('~/Downloads/*.zip').select { |path|
-      zipfile_contents(path).any? { |c| c.match(/\.app$/) }
-    }
+    found = dir('~/Downloads/*.zip').select do |path|
+      zipfile_contents(path).any? { |c| c.match(/\.app[\/]*$/) }
+    end
 
     trash(found)
   end
