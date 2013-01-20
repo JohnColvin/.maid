@@ -4,7 +4,7 @@ Maid.rules do
     `cd ~/.maid && git pull`
   end
 
-  rule 'Mac OS X applications in disk images' do
+  rule 'Trash disk images' do
     trash(dir('~/Downloads/*.dmg'))
   end
 
